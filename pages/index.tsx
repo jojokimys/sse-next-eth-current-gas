@@ -1,6 +1,5 @@
 import Head from "next/head";
-import Image from "next/image";
-import { useEffect, useState, useMemo, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import styles from "../styles/Home.module.css";
 
 export default function Home() {
@@ -10,20 +9,16 @@ export default function Home() {
 
   useEffect(() => {
     if (!sourceRef.current) {
-      console.log("called");
       sourceRef.current = new EventSource("/api/gas", { withCredentials: true });
       sourceRef.current.addEventListener(
         "message",
-        function (e) {
+        (e) => {
           const [a, b, ...rest] = [...e.data];
           setGas(`${a}${b}.${rest.splice(0, 3).join("")}`);
         },
         false,
       );
     }
-    return () => {
-      // sourceRef.current.removeEventListener("message", () => console.log("listener removed"));
-    };
   }, [sourceRef]);
 
   return (
