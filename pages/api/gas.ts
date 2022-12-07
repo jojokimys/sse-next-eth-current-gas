@@ -24,7 +24,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
   setInterval(async function () {
     const gas = await currentGasFee();
-    res.write("data: " + gas);
+    res.write("data: " + gas + "\n\n");
     res.flush();
   }, 3000);
 }
